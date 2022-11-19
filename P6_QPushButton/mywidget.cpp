@@ -1,6 +1,7 @@
 #include "mywidget.h"
 #include "ui_mywidget.h"
 #include <QPushButton>
+#include "mypushbutton.h"
 
 mywidget::mywidget(QWidget *parent)
     : QWidget(parent)
@@ -19,6 +20,15 @@ mywidget::mywidget(QWidget *parent)
 //    resize(600, 400);
     setFixedSize(600, 400);
     setWindowTitle("1st_title");
+
+    MyPushButton* myBtn = new MyPushButton;
+    myBtn->setText("my_btn");
+    myBtn->move(200, 0);
+    myBtn->setParent(this);
+
+//    connect(myBtn, &MyPushButton::clicked, this, &mywidget::close);
+    connect(myBtn, &QPushButton::clicked, this, &QWidget::close);
+
 }
 
 mywidget::~mywidget()

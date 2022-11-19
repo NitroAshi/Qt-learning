@@ -10,9 +10,11 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    mypushbutton.cpp \
     mywidget.cpp
 
 HEADERS += \
+    mypushbutton.h \
     mywidget.h
 
 FORMS += \

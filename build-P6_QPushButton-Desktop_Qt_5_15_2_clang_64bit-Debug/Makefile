@@ -53,9 +53,13 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../P6_QPushButton/main.cpp \
-		../P6_QPushButton/mywidget.cpp moc_mywidget.cpp
+		../P6_QPushButton/mypushbutton.cpp \
+		../P6_QPushButton/mywidget.cpp moc_mypushbutton.cpp \
+		moc_mywidget.cpp
 OBJECTS       = main.o \
+		mypushbutton.o \
 		mywidget.o \
+		moc_mypushbutton.o \
 		moc_mywidget.o
 DIST          = ../../../../Qt/5.15.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/qdevice.pri \
@@ -205,6 +209,7 @@ DIST          = ../../../../Qt/5.15.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/spec_post.prf \
+		../P6_QPushButton/.qmake.stash \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/toolchain.prf \
@@ -233,7 +238,9 @@ DIST          = ../../../../Qt/5.15.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/lex.prf \
-		../P6_QPushButton/P6_QPushButton.pro ../P6_QPushButton/mywidget.h ../P6_QPushButton/main.cpp \
+		../P6_QPushButton/P6_QPushButton.pro ../P6_QPushButton/mypushbutton.h \
+		../P6_QPushButton/mywidget.h ../P6_QPushButton/main.cpp \
+		../P6_QPushButton/mypushbutton.cpp \
 		../P6_QPushButton/mywidget.cpp
 QMAKE_TARGET  = P6_QPushButton
 DESTDIR       = 
@@ -405,6 +412,7 @@ Makefile: ../P6_QPushButton/P6_QPushButton.pro ../../../../Qt/5.15.2/clang_64/mk
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.15.2/clang_64/mkspecs/features/toolchain.prf \
@@ -586,6 +594,7 @@ Makefile: ../P6_QPushButton/P6_QPushButton.pro ../../../../Qt/5.15.2/clang_64/mk
 ../../../../Qt/5.15.2/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.15.2/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.15.2/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.15.2/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.15.2/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.15.2/clang_64/mkspecs/features/toolchain.prf:
@@ -648,8 +657,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.15.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../P6_QPushButton/mywidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../P6_QPushButton/main.cpp ../P6_QPushButton/mywidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../P6_QPushButton/mypushbutton.h ../P6_QPushButton/mywidget.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../P6_QPushButton/main.cpp ../P6_QPushButton/mypushbutton.cpp ../P6_QPushButton/mywidget.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../P6_QPushButton/mywidget.ui $(DISTDIR)/
 
 
@@ -660,6 +669,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r P6_QPushButton.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -684,9 +694,16 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Qt/5.15.2/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk -mmacosx-version-min=10.13 -Wall -Wextra -dM -E -o moc_predefs.h ../../../../Qt/5.15.2/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mywidget.cpp
+compiler_moc_header_make_all: moc_mypushbutton.cpp moc_mywidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mywidget.cpp
+	-$(DEL_FILE) moc_mypushbutton.cpp moc_mywidget.cpp
+moc_mypushbutton.cpp: ../P6_QPushButton/mypushbutton.h \
+		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		moc_predefs.h \
+		../../../../Qt/5.15.2/clang_64/bin/moc
+	/Users/nitro/Qt/5.15.2/clang_64/bin/moc $(DEFINES) --include /Users/nitro/Dev/Qt/Qt-learning/build-P6_QPushButton-Desktop_Qt_5_15_2_clang_64bit-Debug/moc_predefs.h -I/Users/nitro/Qt/5.15.2/clang_64/mkspecs/macx-clang -I/Users/nitro/Dev/Qt/Qt-learning/P6_QPushButton -I/Users/nitro/Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/nitro/Qt/5.15.2/clang_64/lib/QtGui.framework/Headers -I/Users/nitro/Qt/5.15.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/14.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/nitro/Qt/5.15.2/clang_64/lib ../P6_QPushButton/mypushbutton.h -o moc_mypushbutton.cpp
+
 moc_mywidget.cpp: ../P6_QPushButton/mywidget.h \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -724,6 +741,13 @@ main.o: ../P6_QPushButton/main.cpp ../P6_QPushButton/mywidget.h \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../P6_QPushButton/main.cpp
 
+mypushbutton.o: ../P6_QPushButton/mypushbutton.cpp ../P6_QPushButton/mypushbutton.h \
+		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../../Qt/5.15.2/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Qt/5.15.2/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mypushbutton.o ../P6_QPushButton/mypushbutton.cpp
+
 mywidget.o: ../P6_QPushButton/mywidget.cpp ../P6_QPushButton/mywidget.h \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -731,6 +755,9 @@ mywidget.o: ../P6_QPushButton/mywidget.cpp ../P6_QPushButton/mywidget.h \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mywidget.o ../P6_QPushButton/mywidget.cpp
+
+moc_mypushbutton.o: moc_mypushbutton.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mypushbutton.o moc_mypushbutton.cpp
 
 moc_mywidget.o: moc_mywidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mywidget.o moc_mywidget.cpp
