@@ -10,9 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    student.cpp \
+    teacher.cpp \
     widget.cpp
 
 HEADERS += \
+    student.h \
+    teacher.h \
     widget.h
 
 FORMS += \
